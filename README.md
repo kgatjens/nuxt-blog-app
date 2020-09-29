@@ -1,6 +1,6 @@
 # gorilla-news
 
-> My wicked Nuxt.js project
+> App that explain how to consume a basic API endpoint with blog post, and...
 
 ## Build Setup
 
