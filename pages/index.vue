@@ -23,7 +23,7 @@
 
                   <md-card-header>
                     <div class="md-title">
-                      <a :target="_blank" :href="post.link" :title="post.title.rendered">{{post.title.rendered}}</a>
+                      <a target="_blank" :href="post.link" :title="post.title.rendered">{{post.title.rendered}}</a>
                     </div>
                     <div class="md-subhead">
                        {{post._embedded.author[0].name}}
