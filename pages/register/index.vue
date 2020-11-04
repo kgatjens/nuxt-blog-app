@@ -10,7 +10,7 @@
           <!-- <md-field :class="getValidationClass('email')"> -->
               <md-field>
             <label for="email">Email</label>
-            <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
+            <md-input type="email" :disabled="loading" name="email" id="email" autocomplete="email" v-model="form.email"  />
             <!-- <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
             <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span> -->
           </md-field>
@@ -19,7 +19,7 @@
               <!-- <md-field :class="getValidationClass('lastName')"> -->
                   <md-field>
                 <label for="password">Password</label>
-                <md-input type="password" name="password" id="password" autocomplete="password" v-model="form.password" :disabled="sending" />
+                <md-input type="password" :disabled="loading" name="password" id="password" autocomplete="password" v-model="form.password"  />
                 <!-- <span class="md-error" v-if="!$v.form.password.required">The password name is required</span>
                 <span class="md-error" v-else-if="!$v.form.password.minlength">Invalid last name</span> -->
               </md-field>
@@ -31,12 +31,14 @@
         
         <md-card-actions>
           <md-button to="/login">Login</md-button>
-          <md-button type="submit" class="md-primary" :disabled="sending">Register user</md-button>
+          <md-button  type="submit" class="md-primary" :disabled="loading">Register user</md-button>
         </md-card-actions>
 
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user was registered with success!</md-snackbar>
+      <md-snackbar :md-active.sync="authenticated">The user was registered with success!</md-snackbar>
     </form>
+
+
   </div>
 </template>
 
@@ -74,6 +76,21 @@
     //     }
     //   }
     // },
+    computed:{
+      loading(){
+        return this.$store.getters.loading;
+      },
+      authenticated(){
+        return this.$store.getters.authenticated;
+      }
+    },
+    watch:{
+      authenticated(token){
+        if(token){
+          setTimeout(()=>this.$router.push('/'),1500);
+        }
+      }
+    },
     methods: {
     async registerUser(){
         await this.$store.dispatch('authenticateUser',{

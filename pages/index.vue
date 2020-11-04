@@ -8,8 +8,16 @@
         Gorilla Post
       </nuxt-link>
       <div class="md-toolbar-section-end">
-        <md-button to="/login">Login</md-button>
-        <md-button to="/register">Register</md-button>
+
+        <template v-if="authenticated">
+          <md-avatar><img :src="user.avatar" :alt="user.email"></md-avatar>
+          <h6>{{user.email}}</h6>
+        </template>
+        <template v-else>
+          <!-- <md-button to="/login">Login</md-button> -->
+          <md-button to="/register">Register</md-button>
+        </template>
+        
       </div>
     </md-toolbar>
 
@@ -58,15 +66,20 @@
 <script>
   export default{
     async fetch({ store }){
-        await store.dispatch("loadPosts","/api/posts?_embed");
-        console.log('<<<<< this');
+        await store.dispatch("loadPosts",`/api/posts?_embed`);
+        
         console.log(store);
-        console.log('>>>> this');
+        
     },
     computed: {
       posts(){
         return this.$store.getters.posts;
-        
+      },
+      user(){
+        return this.$store.getters.user;
+      },
+      authenticated(){
+        return this.$store.getters.authenticated;
       }
     }
   };

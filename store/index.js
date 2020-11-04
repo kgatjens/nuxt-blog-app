@@ -1,15 +1,26 @@
 import Vuex from 'vuex';
+import md5 from 'md5';
+
+
 
 const createStore = () => {
     return new Vuex.Store({
         state:{
             posts:[],
+            token: "",
             loading: false,
+            user: null
         },
         mutations:{
             
-            setPosts(state,posts){
+            setPosts(state, posts){
                 state.posts = posts;
+            },
+            setToken(state, token){
+                state.token = token;
+            },
+            setUser(state, user){
+                state.user = user;
             },
             setLoading(state, loading) {
                 state.loading = loading;
@@ -17,46 +28,32 @@ const createStore = () => {
         },
         actions:{
             async loadPosts({commit},apiUrl){
-                // console.log("==========");
-                // console.log(apiUrl);
                 commit('setLoading', true);
-
                 const  blogPosts  = await this.$axios.$get(apiUrl);
-                // console.log("==========");
-                // console.log(this.$axios.$get(apiUrl));
                 commit('setLoading', false);
-
                 commit("setPosts", blogPosts);
             },
             async authenticateUser({commit}, userPayload){
                 try{
-                    console.log("********1");
-
-                    const authUserData = await this.$axios.$post('/register/',userPayload);
-                    console.log(authUserData);
-                    console.log("********2");
-
+                    
                     commit('setLoading', true);
-                    console.log(userPayload);
-                    console.log(this.$axios.$post);
-                    console.log("********333 ");
-                   // const authUserData1 = await this.$axios.$post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCq-vskpwqYy8OhLY4DHsH-dLICj5OW9go',userPayload);
-                    console.log(authUserData);
-                    console.log("********3");
-
-                    console.log(authUserData);
+                    const authUserData = await this.$axios.$post('/register/',userPayload);
+                    const avatar = 'http://gravatar.com/avatar/${hasha(authUserData.email)}?d=identicon';
+                    const user = {email:authUserData, avatar};
+                    commit('setUser', user);
+                    commit('setToken', authUserData.idToken);
                     commit('setLoading', false);
                 }catch(err){
-                    console.log("********4");
-
-                   // console.error(err);
                     commit('setLoading', false);
                 }
             }
         },
         getters:{   
             posts: state => state.posts,
-            loading: state => state.loading
+            loading: state => state.loading,
+            loading: user => state.user,
+            authenticated: state => !!state.token
+
         }
     });
 };

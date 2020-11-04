@@ -60,9 +60,7 @@ module.exports = {
     "/api/": {
       target: "https://gorillalogic.com/wp-json/wp/v2/",
       pathRewrite: { "^/api/": "" }
-    }
-  },
-  proxy: {
+    },
     "/register/": {
       target: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCq-vskpwqYy8OhLY4DHsH-dLICj5OW9go",
       pathRewrite: { "^/register/": "" }
