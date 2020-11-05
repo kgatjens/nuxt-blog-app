@@ -10,8 +10,10 @@
       <div class="md-toolbar-section-end">
 
         <template v-if="authenticated">
+          <md-button>
           <md-avatar><img :src="user.avatar" :alt="user.email"></md-avatar>
-          <h6>{{user.email}}</h6>
+          {{user.email}}
+          </md-button>
         </template>
         <template v-else>
           <!-- <md-button to="/login">Login</md-button> -->
