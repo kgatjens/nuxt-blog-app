@@ -69,9 +69,7 @@
   export default{
     async fetch({ store }){
         await store.dispatch("loadPosts",`/api/posts?_embed`);
-        
-        console.log(store);
-        
+        console.log(store); 
     },
     computed: {
       posts(){

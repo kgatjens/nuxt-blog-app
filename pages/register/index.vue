@@ -7,21 +7,17 @@
         </md-card-header>
 
         <md-card-content>
-          <!-- <md-field :class="getValidationClass('email')"> -->
               <md-field>
             <label for="email">Email</label>
             <md-input type="email" :disabled="loading" name="email" id="email" autocomplete="email" v-model="form.email"  />
-            <!-- <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
-            <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span> -->
+            
           </md-field>
 
           <div class="md-layout-item md-small-size-100">
-              <!-- <md-field :class="getValidationClass('lastName')"> -->
                   <md-field>
                 <label for="password">Password</label>
                 <md-input type="password" :disabled="loading" name="password" id="password" autocomplete="password" v-model="form.password"  />
-                <!-- <span class="md-error" v-if="!$v.form.password.required">The password name is required</span>
-                <span class="md-error" v-else-if="!$v.form.password.minlength">Invalid last name</span> -->
+                
               </md-field>
             </div>
           
@@ -43,17 +39,9 @@
 </template>
 
 <script>
-//   import { validationMixin } from 'vuelidate'
-//   import {
-//     required,
-//     email,
-//     minLength,
-//     maxLength
-//   } from 'vuelidate/lib/validators'
 
   export default {
     name: 'FormValidation',
-    //mixins: [validationMixin],
     data: () => ({
       form: {
         password: null,
@@ -63,19 +51,7 @@
       sending: false,
       lastUser: null
     }),
-    // validations: {
-    //   form: {
-    //     password: {
-    //       required,
-    //       minLength: minLength(3)
-    //     },
-        
-    //     email: {
-    //       required,
-    //       email
-    //     }
-    //   }
-    // },
+   
     computed:{
       loading(){
         return this.$store.getters.loading;
@@ -99,37 +75,8 @@
             returnSecureToken: true
         })
     },
-      getValidationClass (fieldName) {
-        const field = this.$v.form[fieldName]
-
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
-        }
-      },
-    //   clearForm () {
-    //     this.$v.$reset()
-    //     this.form.password = null
-    //     this.form.email = null
-    //   },
-    //   saveUser () {
-    //     this.sending = true
-
-    //     // Instead of this timeout, here you can call your API
-    //     window.setTimeout(() => {
-    //       this.userSaved = true
-    //       this.sending = false
-    //       this.clearForm()
-    //     }, 1500)
-    //   },
-    //   validateUser () {
-    //     this.$v.$touch()
-
-    //     if (!this.$v.$invalid) {
-    //       this.saveUser()
-    //     }
-    //   }
+     
+   
     }
   }
 </script>
